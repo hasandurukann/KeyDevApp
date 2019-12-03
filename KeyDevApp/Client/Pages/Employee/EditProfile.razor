@@ -1,0 +1,156 @@
+﻿@page "/EditProfile"
+
+@inject HttpClient Http
+@using KeyDevApp.Shared
+
+@if (user == null)
+{
+    <p>Err</p>
+}
+else
+{
+    <div class="row my-3">
+        <h3>Edit Profile</h3>
+    </div>
+    <div class="row">
+        @* Profile Photo *@
+        <div class="col-sm-3">
+            <h5>Profile Photo</h5>
+            <div class="form-group">
+                <img src="https://grandetest.com/theme/jobhunt-html/images/resource/mpf1.jpg" width="80" class="rounded-circle" />
+            </div>
+            <div class="form-group">
+                <button class="btn btn-primary"><span class="oi oi-file"></span> Upload</button>
+            </div>
+        </div>
+        @* Account *@
+        <div class="col-sm-3">
+            <h5>Account</h5>
+            <div class="form-group">
+                <input type="email" class="form-control" id="txtMail" placeholder="E-Mail" value="@user.Mail">
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" id="txtPassword" placeholder="Password">
+            </div>
+        </div>
+        @* Personal Information *@
+        <div class="col-sm-6">
+            <div class="row">
+                <h5>Personal Information</h5>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="txtName" placeholder="Name" value="@user.Candidate.Name">
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" class="form-control" id="txtPhone" placeholder="Phone">
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="exampleRadios" id="radioMale" value="m" checked>
+                        <label class="form-check-label" for="radioMale">
+                            Male
+                        </label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="exampleRadios" id="radioFemale" value="f" checked>
+                        <label class="form-check-label" for="radioFemale">
+                            Female
+                        </label>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="txtSurname" placeholder="Surname" value="@user.Candidate.Surname">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="txtAddress" placeholder="Address">
+                    </div>
+                    <div class="form-group">
+                        <span class="oi oi-calendar"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        @* Bio *@
+        <div class="col-sm-8">
+            <h5>Bio</h5>
+            <div class="form-group">
+                <label for="txtBio">Example textarea</label>
+                <textarea class="form-control" id="txtBio" rows="3"></textarea>
+            </div>
+        </div>
+    </div>
+    @* Education *@
+    <div class="row">
+        <div class="col-sm-12">
+            <h5>Education</h5>
+            <div class="edu-history">
+                <i><span class="oi oi-clipboard"></span></i>
+                <div class="edu-history-info">
+                    <h3>High School</h3>
+                    <i>2002</i>
+                    <span>Middle East Technical University <i>Computer Science</i></span>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin a ipsum tellus. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
+                </div>
+            </div>
+            <div class="edu-history">
+                <i><span class="oi oi-clipboard"></span></i>
+                <div class="edu-history-info">
+                    <h3>University</h3>
+                    <i>2001</i>
+                    <span>Middle East Technical University <i>Computer Science</i></span>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin a ipsum tellus. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    @* Work Experience *@
+    <div class="row">
+        <div class="col-sm-12">
+            <h5>Work Experience</h5>
+            <div class="work-history">
+                <i></i>
+                <div class="edu-history-info">
+                    <h3>Web Designer <span>Inwave Studio</span></h3>
+                    <i>2008 - 2012</i>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin a ipsum tellus. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
+                </div>
+            </div>
+            <div class="work-history">
+                <i></i>
+                <div class="edu-history-info">
+                    <h3>Web Designer <span>Inwave Studio</span></h3>
+                    <i>2008 - 2012</i>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin a ipsum tellus. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group">
+            <button class="btn btn-primary">Update Changes</button>
+        </div>
+    </div>
+}
+
+@code {
+    User user;
+
+    @*protected override async Task OnInitializedAsync()
+    {
+        user = await UserService.GetUserDataAsync(1);
+    }*@
+
+    //private async Task Update()
+    //{
+    //    await Http.PostAsJsonAsync("", user);
+    //}
+
+    #region
+    private string mail;
+    private string password;
+    #endregion
+}

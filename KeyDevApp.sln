@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29519.161
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyDevApp.Server", "KeyDevApp\Server\KeyDevApp.Server.csproj", "{8A7B9EF2-89AA-4889-9228-91846532A9ED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KeyDevApp.Server", "KeyDevApp\Server\KeyDevApp.Server.csproj", "{8A7B9EF2-89AA-4889-9228-91846532A9ED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyDevApp.Client", "KeyDevApp\Client\KeyDevApp.Client.csproj", "{FF1547DD-13EF-4437-9D8D-C1E4E67FC2A2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KeyDevApp.Client", "KeyDevApp\Client\KeyDevApp.Client.csproj", "{FF1547DD-13EF-4437-9D8D-C1E4E67FC2A2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyDevApp.Shared", "KeyDevApp\Shared\KeyDevApp.Shared.csproj", "{07163613-D877-42DB-8314-39F824265374}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KeyDevApp.Shared", "KeyDevApp\Shared\KeyDevApp.Shared.csproj", "{07163613-D877-42DB-8314-39F824265374}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
