@@ -18,12 +18,12 @@ namespace KeyDevApp.Shared
         public Company Company
         {
             get { return company; }
-            set { if (value == null) { this.Type = false; } else { this.Type = true; } }
+            set { if (value == null) { this.Type = false; } else { this.Type = true;company = value; } }
         }
         public Candidate Candidate 
         {
             get { return candidate; }
-            set { if (value == null) { this.Type = false; } else { this.Type = true; } }
+            set { if (value == null) { this.Type = false; } else { this.Type = true; candidate = value; } }
         }
         public bool Type { get => type; set => type = value; }
         public int UserID { get => userID; set => userID = value; }

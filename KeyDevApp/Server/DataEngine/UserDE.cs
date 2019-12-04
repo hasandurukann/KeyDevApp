@@ -22,10 +22,14 @@ namespace KeyDevApp.Server.DataEngine
                 {
                     if (cand != null && cand.CandidateID != 0)
                     { user.Candidate = cand; }
-                    else { user.Candidate = null; }
-                    if (comp != null && comp.CompanyID != 0)
-                    { user.Company = comp; }
-                    else { user.Company = null; }
+                    else
+                    {
+                        user.Candidate = null;
+                        if (comp != null && comp.CompanyID != 0)
+                        { user.Company = comp; }
+                        else { user.Company = null; }
+                    }
+
                     return user;
                 }, paramu, commandType: CommandType.StoredProcedure, splitOn: "CandidateID,CompanyID");
                 lstUser = lists.ToList<User>();
@@ -33,7 +37,7 @@ namespace KeyDevApp.Server.DataEngine
 
             }
         }
-        public User AddUser(User user,Candidate cand,Company comp)
+        public User AddUser(User user, Candidate cand, Company comp)
         {
             var paramu = new
             {
@@ -52,11 +56,11 @@ namespace KeyDevApp.Server.DataEngine
 
             }
         }
-        public bool UpdateUser(User user,Candidate cand,Company comp)
+        public bool UpdateUser(User user, Candidate cand, Company comp)
         {
             var paramu = new
             {
-                UserID=user.UserID,
+                UserID = user.UserID,
                 Mail = user.Mail,
                 Password = user.Password,
                 Type = user.Type,
