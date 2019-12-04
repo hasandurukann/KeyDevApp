@@ -19,6 +19,7 @@ namespace KeyDevApp.Shared
         List<CandidateKeyword> candidateKeywords;
         List<CandidatePool> candidatePools;
         List<Education> educations;
+        User user;
         public string Name { get => name; set => name = value; }
         public string Surname { get => surname; set => surname = value; }
         public string Phone { get => phone; set => phone = value; }
@@ -32,5 +33,6 @@ namespace KeyDevApp.Shared
         public List<CandidatePool> CandidatePools { get => candidatePools; set => candidatePools = value; }
         public List<Education> Educations { get => educations; set => educations = value; }
         public int CandidateID { get => candidateID; set => candidateID = value; }
+        public User User { get => user; set => user = value; }
     }
 }
