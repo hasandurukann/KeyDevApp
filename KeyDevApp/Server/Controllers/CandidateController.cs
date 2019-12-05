@@ -13,7 +13,7 @@ namespace KeyDevApp.Server.Controllers
     [ApiController]
     public class CandidateController : ControllerBase
     {
-        [HttpGet]
+        [HttpGet("{id}")]
         public IEnumerable<Candidate> Get(int id)
         {
             // GET: api/Candidate

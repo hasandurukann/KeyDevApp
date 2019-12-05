@@ -13,7 +13,7 @@ namespace KeyDevApp.Server.Controllers
     [ApiController]
     public class CompanyPositionController : ControllerBase
     {
-        [HttpGet]
+        [HttpGet("{id}")]
         public IEnumerable<CompanyPosition> Get(int id)
         {
             // GET: api/CompanyPosition

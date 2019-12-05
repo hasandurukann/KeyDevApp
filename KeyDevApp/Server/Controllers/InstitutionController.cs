@@ -14,7 +14,7 @@ namespace KeyDevApp.Server.Controllers
     [ApiController]
     public class InstitutionController : ControllerBase
     {
-        [HttpGet]
+        [HttpGet("{id}")]
         public IEnumerable<Institution> Get(int id)
         {
             // GET: api/Institution

@@ -13,7 +13,7 @@ namespace KeyDevApp.Server.Controllers
     [ApiController]
     public class QuestionController : ControllerBase
     {
-        [HttpGet]
+        [HttpGet("{id}")]
         public IEnumerable<Question> Get(int id)
         {
             // GET: api/Question
