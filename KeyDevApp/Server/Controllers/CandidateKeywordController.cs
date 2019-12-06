@@ -13,14 +13,14 @@ namespace KeyDevApp.Server.Controllers
     [ApiController]
     public class CandidateKeywordController : ControllerBase
     {
-        [HttpGet("{id}")]
-        public IEnumerable<CandidateKeyword> Get(int id)
+        [HttpGet("{kid}/{cid}")]
+        public IEnumerable<CandidateKeyword> Get(int kid,int cid)
         {
             // GET: api/CandidateKeyword
             //HttpContext.RiseError(new InvalidOperationException("Test"));
             CandidateKeyword model = new CandidateKeyword();
             CandidateKeywordDE de = new CandidateKeywordDE();
-            return de.GetCandidateKeyword(id);
+            return de.GetCandidateKeyword(kid,cid);
         }
         [HttpPost]
         public CandidateKeyword Post([FromBody] CandidateKeyword model)

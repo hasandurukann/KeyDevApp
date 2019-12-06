@@ -11,9 +11,9 @@ namespace KeyDevApp.Server.DataEngine
 {
     public class CandidateKeywordDE
     {
-        public List<CandidateKeyword> GetCandidateKeyword(int id)
+        public List<CandidateKeyword> GetCandidateKeyword(int kid,int cid)
         {
-            var paramu = new { CandidateKeywordID = id };
+            var paramu = new { KeywordID = kid, CandidateID=cid };
             using (IDbConnection cnn = new SqlConnection(Helper.GetConnectionString()))
             {
                 string sql = "dbo.SP_CandidateKeywordGET";
