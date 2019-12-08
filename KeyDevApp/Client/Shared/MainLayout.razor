@@ -1,14 +1,27 @@
 ﻿@inherits LayoutComponentBase
 
 <div class="sidebar">
-    <NavMenu />
+    @if (isEmployee)
+    {
+        <NavMenu />
+    }
+
+    else
+    {
+        <NavMenu2 />
+    }
+
 </div>
 
 <div class="container">
-    Employee/@Body
+    @Body
 </div>
 
 <footer class="container">
     <hr>
     Hire Employees
 </footer>
+
+@code{
+    bool isEmployee = false;
+}
