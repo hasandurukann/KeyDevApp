@@ -1,0 +1,123 @@
+﻿@page "/Profile"
+
+@inject HttpClient Http
+@using KeyDevApp.Shared
+
+
+<div class="row my-3">
+    <h3>Edit Profile</h3>
+</div>
+<div class="row">
+    @* Profile Photo *@
+    <div class="col-sm-3">
+        <h4>Company Logo</h4>
+        <div class="form-group">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcR-2ISnlrqQh6scHBMkCgUro6mAnX5D850M4qHblF1zcX8FpsA1" width="120" height="120" class="rounded" />
+        </div>
+        <div class="form-group">
+            <button class="btn btn-primary"><span class="oi oi-file"></span> Upload</button>
+        </div>
+    </div>
+    @* Account *@
+    <div class="col">
+        <h5>About Your Company</h5>
+        <div class="form-group">
+            <textarea class="form-control" id="companyInfo" rows="7">We are the company X.
+We use technologies like X.
+We are the future.
+            </textarea>
+        </div>
+
+
+    </div>
+</div>
+<h4 style="color:red">Company Information</h4>
+<div class="row">
+    
+    <div class="col-sm-6">
+        <div class="form-group">
+            <h5 style="color:blue">Company Name</h5>
+            <input type="text" class="form-control" id="companyName" placeholder="Company Name" value="Company X">
+        </div>
+
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group">
+            <h5 style="color:blue">Company Description</h5>
+            <input type="text" class="form-control" id="companyDescription" placeholder="Company Description" value="WEB Development" >
+            
+        </div>
+    </div>
+
+</div>
+<h4 style="color:red">Location Information</h4>
+<div class="row">
+    <div class="col-sm-6">
+        <div class="form-group">
+            <h5 style="color:blue">Country</h5>
+            <input type="text" class="form-control" id="country" placeholder="country" value="Turkey">
+
+        </div>
+
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group">
+            <h5 style="color:blue">Province</h5>
+            <input type="text" class="form-control" id="province" placeholder="province" value="Ankara">
+
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group">
+            <h5 style="color:blue">Subprovince</h5>
+            <input type="text" class="form-control" id="subprovince" placeholder="subprovince" value="Çankaya">
+
+        </div>
+    </div>
+</div>
+<h4 style="color:red">Address</h4>
+<div class="row">
+    <div class="col">
+        <div class="form-group">
+            <textarea class="form-control" id="companyInfo" rows="2"> Bahçelievler 3. Cadde Çankaya / Ankara / Turkey
+            </textarea>
+        </div>
+    </div>
+</div>
+<h4 style="color:red">Contact Information</h4>
+<div class="row">
+    <div class="col-sm-6">
+        <div class="form-group">
+            <h5 style="color:blue">Phone</h5>
+            <input type="tel" class="form-control" id="phone" placeholder="phone" value="+903121234567">
+
+        </div>
+
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group">
+            <h5 style="color:blue">Fax</h5>
+            <input type="tel" class="form-control" id="fax" placeholder="fax" value="+903129876543">
+
+        </div>
+
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group">
+            <h5 style="color:blue">Website</h5>
+            <input type="text" class="form-control" id="website" placeholder="website" value="www.companyx.com.tr">
+
+        </div>
+
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group">
+            <h5 style="color:blue">Mail</h5>
+            <input type="email" class="form-control" id="mail" placeholder="mail" value="info@companyx.com.tr">
+
+        </div>
+
+    </div>
+</div>
+
+
