@@ -1,0 +1,85 @@
+﻿@page "/keywords"
+
+@using KeyDevApp.Shared;
+@inject HttpClient Http;
+
+<h3 class="my-3">Keywords</h3>
+
+@if (candidateKeyword == null)
+{
+    <p>err</p>
+}
+else
+{
+    <div class="row my-3">
+        <div>
+            <h3 class="my-3">Add a New Skill</h3>
+            <div class="form-group">
+                <input type="text" class="form-control" id="txtSkill" placeholder="Add a New Keyword">
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlSelect2">Or Select a Keyword</label>
+                <select multiple class="form-control" id="exampleFormControlSelect2" @bind="selectedKeywordId">
+                    @foreach (var item in keywords)
+                    {
+                        <option value="@item.KeywordID">@item.Title</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <button @onclick=AddKeyWord type="submit" class="btn btn-primary">Add</button>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="row my-3">
+        <div class="index-skills">
+            <h3 class="my-3">Your Skills</h3>
+            @foreach (var item in candidateKeyword)
+            {
+                <div class="row">
+                    <div class="col-sm-5">@item.Keyword.Title</div>
+                    <div class="col-sm-5">
+                        @for (int i = 0; i < item.Grade; i += 20)
+                        {
+                            <span class="oi oi-star"></span>
+                        }
+                    </div>
+                    <div class="col-sm-1"><a href="#" data-toggle="modal" data-target=".bd-example-modal-sm"><span class="oi oi-circle-x"></span></a></div>
+                    <div class="col-sm-1"><span class="oi oi-cog"></span></div>
+                </div>
+            }
+        </div>
+    </div>
+}
+
+@code
+{
+    //private Candidate[] candidate;
+    private CandidateKeyword[] candidateKeyword;
+    private Keyword[] keywords;
+    private int selectedKeywordId;
+
+    protected override async Task OnInitializedAsync()
+    {
+        //candidate = await Http.GetJsonAsync<Candidate[]>("api/candidate/2");
+        keywords = await Http.GetJsonAsync<Keyword[]>("api/keyword/0");
+        candidateKeyword = await Http.GetJsonAsync<CandidateKeyword[]>("api/candidateKeyword/0/1");
+    }
+
+    private async Task AddKeyWord()
+    {
+        CandidateKeyword newCandidateKeyword = new CandidateKeyword();
+        Keyword newKeyword = new Keyword();
+        newKeyword.KeywordID = selectedKeywordId;
+
+        newCandidateKeyword.Grade = 0.5f;
+        newCandidateKeyword.Keyword = newKeyword;
+        newCandidateKeyword.Candidate = candidateKeyword[0].Candidate;
+        await Http.PutJsonAsync<HttpResponseMessage>("api/candidateKeyword", newCandidateKeyword);
+    }
+
+    #region Properties
+        
+    #endregion
+}

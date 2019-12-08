@@ -8,7 +8,7 @@ namespace KeyDevApp.Server.DataEngine
     {
         public static string GetConnectionString(string name = "DapperDB")
         {
-            return "Server=.;Database=keydev_db01;Trusted_Connection=True;";
+            return "Server=.\\SQLExpress;Database=keydev_db01;Trusted_Connection=True;";
         }
     }
 }

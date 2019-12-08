@@ -1,80 +1,111 @@
 ﻿@page "/bbb"
 
-<div class="row">
-    <div class="col-sm-9">
-        <div class="row profile-progress my-5">
-            <div class="col-sm-12">
-                <h5>Profile Progress</h5>
-                <div class="progress" style="height: 20px;">
-                    <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+@using KeyDevApp.Shared
+@using System.Net.Http
+@inject HttpClient Http
+
+@if (user == null)
+{
+    <h1>nul</h1>
+}
+else
+{
+    <div class="row">
+        <div class="col-sm-9">
+            <div class="row profile-progress my-5">
+                <div class="col-sm-12">
+                    <h5>Profile Progress</h5>
+                    <div class="progress" style="height: 20px;">
+                        <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">TO DO 25%</div>
+                    </div>
+                    <div class="mt-1"></div>
+                    <button type="button" class="btn btn-primary">Edit Profile</button>
                 </div>
-                <div class="mt-1"></div>
-                <button type="button" class="btn btn-primary">Edit Profile</button>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-12 index-skills">
-                <div class="card">
-                    <h4 class="card-header">Skills</h4>
-                    <div class="card-body">
+            <div class="row">
+                <div class="col-sm-12 index-skills">
+                    <div class="card">
+                        <h4 class="card-header">Skills</h4>
+                        <div class="card-body">
 
-                        <p class="card-text">You can add new skills or retry the exams.</p>
+                            <p class="card-text">You can add new skills or retry the exams.</p>
 
-                        <div class="row">
-                            <div class="col-sm-5">C#</div>
-                            <div class="col-sm-5"><span class="oi oi-star"></span><span class="oi oi-star"></span><span class="oi oi-star"></span></div>
-                            <div class="col-sm-1"><a href="#" data-toggle="modal" data-target=".bd-example-modal-sm"><span class="oi oi-circle-x"></span></a></div>
-                            <div class="col-sm-1"><span class="oi oi-cog"></span></div>
+                            @foreach (var item in candidateKeywords)
+                            {
+                                <div class="row">
+                                    <div class="col-sm-5">@item.Keyword.Title</div>
+                                    <div class="col-sm-5">
+                                        @for (int i = 0; i < item.Grade; i += 20)
+                                        {
+                                            <span class="oi oi-star"></span>
+                                        }
+                                    </div>
+                                    <div class="col-sm-1"><a href="#" data-toggle="modal" data-target=".bd-example-modal-sm"><span class="oi oi-circle-x"></span></a></div>
+                                    <div class="col-sm-1"><span class="oi oi-cog"></span></div>
+                                </div>
+                            }
+                            <div class="mt-1"></div>
+                            <a href="#" class="btn btn-primary float-left"><span class="oi oi-plus"></span> Add New Skill</a>
+                            <a href="keywords" class="btn btn-primary float-left ml-3"><span class="oi oi-excerpt"></span> Other Skills</a>
                         </div>
-                        <div class="row">
-                            <div class="col-sm-5">C++</div>
-                            <div class="col-sm-5"><span class="oi oi-star"></span></div>
-                            <div class="col-sm-1"><span class="oi oi-circle-x"></span></div>
-                            <div class="col-sm-1"><span class="oi oi-cog"></span></div>
-                        </div>
-
-                        <div class="mt-1"></div>
-                        <a href="#" class="btn btn-primary float-left"><span class="oi oi-plus"></span> Add New Skill</a>
-                        <a href="#" class="btn btn-primary float-left ml-3"><span class="oi oi-excerpt"></span> Other Skills</a>
                     </div>
                 </div>
             </div>
-        </div>
 
+            <!-- Modal Delete-->
+            <div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <button class="btn alert-danger">Remove This Skill</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal Add-->
+            <div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <button class="btn alert-danger">Remove This Skill</button>
+                    </div>
+                </div>
+            </div>
+            @****************************************@
 
-
-        <!-- Modal -->
-        <div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <button class="btn alert-danger">Remove This Skill</button>
+            @* Flow *@
+            <div class="row my-5">
+                <div class="col-sm-12">
+                    <h4>Flow</h4>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In non velit ante. Nam in consectetur elit. Sed non dignissim neque, nec efficitur quam. Donec ultrices, ligula at facilisis venenatis, mi nibh dictum sem, et pharetra tortor lectus vel dui. Sed sed ipsum at mauris pellentesque tincidunt ac at risus. Morbi accumsan venenatis eros non ornare. Sed pulvinar, leo et aliquam varius, ipsum dolor scelerisque justo, sit amet finibus lacus ligula sed dolor. Nullam fringilla porttitor est, eu pretium lectus tempus eleifend. Donec posuere nulla in urna blandit, non efficitur justo facilisis. Morbi bibendum sollicitudin laoreet. Nam fringilla mi enim, in condimentum ipsum mollis quis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nam quis lectus nisl.</p>
+                    <p>Donec finibus lacus elit, id facilisis erat suscipit et. Nulla sit amet metus sit amet elit semper aliquet. Vivamus a tellus auctor nisl feugiat ultrices in vitae nisi. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur id eros non dolor ullamcorper mollis. Vestibulum pretium lacus libero, id volutpat nulla auctor ut. Maecenas tempus, nisl a suscipit blandit, augue nunc pulvinar libero, nec elementum tellus nunc consequat velit. Vestibulum dui ipsum, efficitur lacinia ullamcorper quis, lacinia ac nunc. Aliquam viverra ipsum et odio rutrum, sed faucibus libero sodales. Donec nec velit nulla.</p>
+                    <p>Cras egestas egestas luctus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra dignissim massa, non pharetra libero finibus a. Sed leo tortor, sodales vitae dui id, imperdiet vestibulum tortor. Integer quam tortor, tincidunt non lobortis pharetra, tincidunt in magna. Nam sollicitudin diam purus, id tincidunt quam scelerisque sed. Duis nec sodales metus. Fusce nisl nibh, lobortis luctus varius ac, maximus consectetur nunc. Sed et ipsum quam. Vivamus vitae pellentesque ex. Vivamus at purus finibus magna porta ultricies a in dolor. Sed id mi a sem ultrices bibendum vitae eget urna. Praesent aliquet tellus ac turpis imperdiet, nec semper risus ultrices.</p>
                 </div>
             </div>
         </div>
-        @****************************************@
-
-
-        @* Flow *@
-        <div class="row my-5">
-            <div class="col-sm-12">
-                <h4>Flow</h4>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In non velit ante. Nam in consectetur elit. Sed non dignissim neque, nec efficitur quam. Donec ultrices, ligula at facilisis venenatis, mi nibh dictum sem, et pharetra tortor lectus vel dui. Sed sed ipsum at mauris pellentesque tincidunt ac at risus. Morbi accumsan venenatis eros non ornare. Sed pulvinar, leo et aliquam varius, ipsum dolor scelerisque justo, sit amet finibus lacus ligula sed dolor. Nullam fringilla porttitor est, eu pretium lectus tempus eleifend. Donec posuere nulla in urna blandit, non efficitur justo facilisis. Morbi bibendum sollicitudin laoreet. Nam fringilla mi enim, in condimentum ipsum mollis quis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nam quis lectus nisl.</p>
-                <p>Donec finibus lacus elit, id facilisis erat suscipit et. Nulla sit amet metus sit amet elit semper aliquet. Vivamus a tellus auctor nisl feugiat ultrices in vitae nisi. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur id eros non dolor ullamcorper mollis. Vestibulum pretium lacus libero, id volutpat nulla auctor ut. Maecenas tempus, nisl a suscipit blandit, augue nunc pulvinar libero, nec elementum tellus nunc consequat velit. Vestibulum dui ipsum, efficitur lacinia ullamcorper quis, lacinia ac nunc. Aliquam viverra ipsum et odio rutrum, sed faucibus libero sodales. Donec nec velit nulla.</p>
-                <p>Cras egestas egestas luctus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra dignissim massa, non pharetra libero finibus a. Sed leo tortor, sodales vitae dui id, imperdiet vestibulum tortor. Integer quam tortor, tincidunt non lobortis pharetra, tincidunt in magna. Nam sollicitudin diam purus, id tincidunt quam scelerisque sed. Duis nec sodales metus. Fusce nisl nibh, lobortis luctus varius ac, maximus consectetur nunc. Sed et ipsum quam. Vivamus vitae pellentesque ex. Vivamus at purus finibus magna porta ultricies a in dolor. Sed id mi a sem ultrices bibendum vitae eget urna. Praesent aliquet tellus ac turpis imperdiet, nec semper risus ultrices.</p>
+        <div class="col-sm-3 my-5">
+            <div class="card">
+                <h4 class="card-header">
+                    Notifications
+                    <span class="badge badge-primary ml-3">4</span>
+                </h4>
+                <div class="card-body">
+                    <h5 class="card-title">Special title treatment</h5>
+                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
             </div>
         </div>
     </div>
-    <div class="col-sm-3 my-5">
-        <div class="card">
-            <h4 class="card-header">
-                Notifications
-                <span class="badge badge-primary ml-3">4</span>
-            </h4>
-            <div class="card-body">
-                <h5 class="card-title">Special title treatment</h5>
-                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
-        </div>
-    </div>
-</div>
+}
+
+@code
+{
+    private User[] user;
+    private Candidate[] candidates;
+    private CandidateKeyword[] candidateKeywords;
+
+    protected override async Task OnInitializedAsync()
+    {
+        user = await Http.GetJsonAsync<User[]>("api/user/1");
+        candidates = await Http.GetJsonAsync<Candidate[]>($"api/candidate/{user[0].Candidate.CandidateID}");
+        candidateKeywords = await Http.GetJsonAsync<CandidateKeyword[]>($"api/candidateKeyword/0/{candidates[0].CandidateID}");
+    }
+}
