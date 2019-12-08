@@ -3,6 +3,7 @@
 @inject HttpClient Http
 @using KeyDevApp.Shared
 
+<h1></h1>
 @if (user == null)
 {
     <p>Err</p>
@@ -27,10 +28,10 @@ else
         <div class="col-sm-3">
             <h5>Account</h5>
             <div class="form-group">
-                <input type="email" class="form-control" id="txtMail" placeholder="E-Mail" value="@user.Mail">
+                <input type="email" class="form-control" id="txtMail" placeholder="E-Mail" @bind="mail">
             </div>
             <div class="form-group">
-                <input type="password" class="form-control" id="txtPassword" placeholder="Password">
+                <input type="password" class="form-control" id="txtPassword" placeholder="Password" @bind="password">
             </div>
         </div>
         @* Personal Information *@
@@ -41,10 +42,10 @@ else
             <div class="row">
                 <div class="col-sm-6">
                     <div class="form-group">
-                        <input type="text" class="form-control" id="txtName" placeholder="Name" value="@user.Candidate.Name">
+                        <input type="text" class="form-control" id="txtName" placeholder="Name" value="@candidate.Name">
                     </div>
                     <div class="form-group">
-                        <input type="tel" class="form-control" id="txtPhone" placeholder="Phone">
+                        <input type="tel" class="form-control" id="txtPhone" placeholder="@candidate.Phone">
                     </div>
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="exampleRadios" id="radioMale" value="m" checked>
@@ -61,10 +62,10 @@ else
                 </div>
                 <div class="col-sm-6">
                     <div class="form-group">
-                        <input type="text" class="form-control" id="txtSurname" placeholder="Surname" value="@user.Candidate.Surname">
+                        <input type="text" class="form-control" id="txtSurname" placeholder="Surname" value="@candidate.Surname">
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="txtAddress" placeholder="Address">
+                        <input type="text" class="form-control" id="txtAddress" placeholder="@candidate.Province">
                     </div>
                     <div class="form-group">
                         <span class="oi oi-calendar"></span>
@@ -107,8 +108,54 @@ else
             </div>
         </div>
     </div>
+    <div class="row my-3">
+        <a href="#" class="btn btn-primary float-left" data-toggle="modal" data-target="#exampleModal" data-whatever="@err"><span class="oi oi-plus"></span>Add Education</a>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add New Education Info</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="institution-name" class="col-form-label">Institution:</label>
+                            <input type="text" class="form-control" id="institution-name">
+                        </div>
+                        <div class="form-group">
+                            <label for="department" class="col-form-label">Department:</label>
+                            <input type="text" class="form-control" id="department">
+                        </div>
+                        <div class="form-group">
+                            <label for="education-level" class="col-form-label">Education Level:</label>
+                            <input type="text" class="form-control" id="education-level">
+                        </div>
+                        <div class="form-group">
+                            <label for="graduation-year" class="col-form-label">Graduation Year:</label>
+                            <input type="text" class="form-control" id="graduation-year">
+                        </div>
+                        <div class="form-group">
+                            <label for="gpa" class="col-form-label">GPA:</label>
+                            <input type="text" class="form-control" id="gpa" value="@err">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" @onclick=AddEducation>Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    /********************/
     @* Work Experience *@
-    <div class="row">
+    <div class="row my-3">
         <div class="col-sm-12">
             <h5>Work Experience</h5>
             <div class="work-history">
@@ -129,28 +176,73 @@ else
             </div>
         </div>
     </div>
-    <div class="row">
+    <div class="row my-3">
+        <a href="#" class="btn btn-primary float-left" data-toggle="modal" data-target="#exampleModallllll" data-whatever="@err"><span class="oi oi-plus"></span>Add Work Experience</a>
+    </div>
+    <div class="row my-3">
         <div class="form-group">
-            <button class="btn btn-primary">Update Changes</button>
+            <button @onclick=UpdateProfile class="btn btn-primary">Update Changes</button>
         </div>
     </div>
 }
 
-@code {
-    User user;
+@code
+{
 
-    @*protected override async Task OnInitializedAsync()
+    private string err = "";
+    private User[] user;
+    private Candidate candidate;
+    private Education education;
+    Department[] department;
+
+    protected override async Task OnInitializedAsync()
     {
-        user = await UserService.GetUserDataAsync(1);
-    }*@
+        user = await Http.GetJsonAsync<User[]>("api/user/3");
+        mail = user[0].Mail;
+        password = user[0].Password;
+        candidate = user[0].Candidate;
+        //candidate = await Http.GetJsonAsync<Candidate[]>($"api/candidate/{user[0].Candidate.CandidateID}");
+        department = await Http.GetJsonAsync<Department[]>("api/department/3");
+    }
 
-    //private async Task Update()
-    //{
-    //    await Http.PostAsJsonAsync("", user);
-    //}
+    private async Task UpdateProfile()
+    {
+        user[0].Mail = mail;
+        user[0].Password = password;
+        user[0].Candidate = candidate;
+        user[0].Company = null;
+        await Http.PutJsonAsync<HttpResponseMessage>("api/user", user[0]);
+    }
 
-    #region
+    private async Task AddEducation()
+    {
+        Education newEdu = new Education();
+        Console.WriteLine(candidate.CandidateID);
+        Console.WriteLine(department[0].DepartmentID);
+        newEdu.Department = department[0];
+        newEdu.EducationLevel = 1;
+        newEdu.GPA = 3;
+        newEdu.GraduationYear = 2008;
+        newEdu.Candidate = candidate;
+        HttpResponseMessage response = await Http.PutJsonAsync<HttpResponseMessage>("api/education", newEdu);
+        if (response.StatusCode == System.Net.HttpStatusCode.OK)
+        {
+            err = "oldu";
+            Console.WriteLine("oldu");
+        }
+        else
+        {
+            err = "errorrr";
+            Console.WriteLine("err");
+        }
+    }
+
+    #region Properties
     private string mail;
     private string password;
+    private string name;
     #endregion
+
 }
+
+

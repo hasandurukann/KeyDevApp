@@ -1,0 +1,146 @@
+﻿@page "/quiez"
+
+@using System.Threading;
+@using KeyDevApp.Shared;
+@inject HttpClient Http;
+
+@if (exam[0] == null)
+{
+    <p>err</p>
+}
+else
+{
+    <div class="my-3">
+        @*<h3>@exam[0].Keyword.Title Quiz</h3>*@
+    </div>
+
+    @if (!isStarted)
+    {
+        @*<div class="progress-bar my-3" role="progressbar" style="width: @percentage%;" aria-valuenow="@count" aria-valuemin="0" aria-valuemax="@firstCount">@count</div>
+
+         Content 
+        <div class="row my-3">
+            <div class="col-sm-6">
+                <h5>@($"{currentQuestionNumber + 1}.Question")</h5>
+            </div>
+            <div class="col-sm-6 text-right">
+                <h5 class="text-right">@($"{currentQuestionNumber + 1}") / @exam.Questions.Count</h5>
+            </div>
+
+        </div>
+        <div class="row">
+            <p class="mt-3 ml-3">@exam.Questions[currentQuestionNumber].Content</p>
+        </div>*@
+
+
+        @*@foreach (var option in exam.Questions[currentQuestionNumber].Options)
+            {
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="@option">
+                    <label class="form-check-label" for="exampleRadios1">
+                        @option
+                    </label>
+                </div>
+            }*@
+
+
+        @*<div class="row my-3">
+            <button @onclick="PrevQuestion" class="btn btn-primary @prevButtonDisabledText"><span class="oi oi-chevron-left"></span> Prev</button>
+            <button @onclick="NextQuestion" class="btn btn-primary @nextButtonDisabledText ml-5">Next <span class="oi oi-chevron-right"></span></button>
+        </div>*@
+    }
+    else
+    {
+        <div class="text-center">
+            <p>Rules....</p>
+            @*Your time : @exam[0].Time seconds.*@
+        </div>
+        <div class="col text-center my-3"><button @onclick="StartCountdown" class="btn btn-primary">Start</button></div>
+    }
+}
+
+
+@code
+{
+    private Exam[] exam;
+    private Question[] questions;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        exam = await Http.GetJsonAsync<Exam[]>("api/exam/3");
+
+    }
+
+    private int currentQuestionNumber = 0;
+    private bool isStarted = false;
+    private string prevButtonDisabledText = "disabled";
+    private string nextButtonDisabledText = "";
+    private bool nextButtonIsEnabled = true;
+    private int firstCount = 60;
+    private int count = 60;
+    private int percentage = 100;
+
+    void StartCountdown()
+    {
+        isStarted = true;
+        @*var timer = new Timer(new TimerCallback(_ =>
+        {
+            if (count <= 0)
+            {
+                return;
+            }
+            else
+            {
+                count--;
+                percentage = 100 * count / firstCount;
+
+                CheckPrevButtonStatus();
+            }
+
+            //Blazor would not recognize the state change and not refresh the UI
+            //InvokeAsync(() =>
+            //{
+            //    StateHasChanged();
+            //});
+            //}), null, 1000, 1000);
+        }*@
+    }
+    //void NextQuestion()
+    //{
+    //    if (nextButtonDisabledText == "")
+    //    {
+    //        currentQuestionNumber++;
+    //        CheckPrevButtonStatus();
+    //    }
+    //}
+
+    //void PrevQuestion()
+    //{
+    //    if (prevButtonDisabledText == "")
+    //    {
+    //        currentQuestionNumber--;
+    //        CheckPrevButtonStatus();
+    //    }
+    //}
+
+    //void CheckPrevButtonStatus()
+    //{
+    //    //if (currentQuestionNumber > 0)
+    //    //{
+    //    //    prevButtonDisabledText = "";
+    //    //}
+    //    //else
+    //    //{
+    //    //    prevButtonDisabledText = "disabled";
+    //    //}
+    //    //if (currentQuestionNumber == (questions - 1))
+    //    //{
+    //    //    nextButtonDisabledText = "disabled";
+    //    //}
+    //    //else
+    //    //{
+    //    //    nextButtonDisabledText = "";
+    //    //}
+    //}
+    }
