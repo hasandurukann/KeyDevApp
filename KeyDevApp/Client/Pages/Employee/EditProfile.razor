@@ -224,7 +224,7 @@ else
         newEdu.GPA = 3;
         newEdu.GraduationYear = 2008;
         newEdu.Candidate = candidate;
-        HttpResponseMessage response = await Http.PutJsonAsync<HttpResponseMessage>("api/education", newEdu);
+        HttpResponseMessage response = await Http.PostJsonAsync<HttpResponseMessage>("api/education", newEdu);
         if (response.StatusCode == System.Net.HttpStatusCode.OK)
         {
             err = "oldu";

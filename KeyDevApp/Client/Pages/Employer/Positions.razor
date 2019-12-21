@@ -1,0 +1,83 @@
+﻿@page "/Positions"
+
+@inject HttpClient Http
+@using KeyDevApp.Shared
+@using System.Net.Http
+
+@if (company == null)
+{
+    <p>ERROR</p>
+}
+else
+{
+    <h2>Positions</h2>
+    <div class="row">
+        <div class="col-sm">
+            <ul class="list-group">
+                @for (int i = 0; i < company[0].CompanyPositions.Count; i++)
+                {
+                    <li class="list-group-item">@company[0].CompanyPositions[i].Title</li>
+                }
+            </ul>
+        </div>
+        <div class="col-sm">
+            <button @onclick=addPosition class="btn btn-primary">Add Position</button>
+        </div>
+
+    </div>
+}
+@code {
+    private string error = "";
+    private Company[] company;
+    List<CompanyPosition> companyPosition;
+    List<CandidatePool> candidatePool;
+
+    protected override async Task OnInitializedAsync()
+    {
+        company = await Http.GetJsonAsync<Company[]>("api/company/1");
+        companyPosition = company[0].CompanyPositions;
+        candidatePool = company[0].CandidatePools;
+        Console.WriteLine("helloooooooooooooooooooooooooooooooooooo");
+
+    }
+    private async Task addPosition()
+    {
+        CompanyPosition a = new CompanyPosition();
+        a.Company = null;
+        a.CandidatePool = null;
+        a.CompanyPositionID = 100;
+        a.Title = RandomString(10);
+        company[0].CompanyPositions.Add(a);
+        Company x = new Company();
+        x.Address = company[0].Address;
+        x.CandidatePools = company[0].CandidatePools;
+        x.CompanyID = company[0].CompanyID;
+        x.CompanyPositions = company[0].CompanyPositions;
+        x.Country = company[0].Country;
+        x.Description = company[0].Description;
+        x.Fax = company[0].Fax;
+        x.Mail = company[0].Mail;
+        x.Phone = company[0].Phone;
+        x.Province = company[0].Province;
+        x.SubProvince = company[0].SubProvince;
+        x.Title = company[0].Title;
+        x.User = company[0].User;
+        x.WebsiteURL = company[0].WebsiteURL;
+
+
+        //company[0].CompanyPositions = companyPosition;
+        await Http.PutJsonAsync<HttpResponseMessage>("api/Company", x);
+        await Http.PutJsonAsync<HttpResponseMessage>("api/CompanyPositions", company[0].CompanyPositions);
+
+    }
+
+
+
+    private static Random random = new Random();
+    public static string RandomString(int length)
+    {
+        const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        return new string(Enumerable.Repeat(chars, length)
+          .Select(s => s[random.Next(s.Length)]).ToArray());
+    }
+}
