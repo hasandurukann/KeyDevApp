@@ -1,63 +1,114 @@
-﻿@page "/s"
+﻿@page "/"
 
-<h1>Welcome, Company X !</h1>
+@using KeyDevApp.Shared
+@using System.Net.Http
+@inject HttpClient Http
+
+@if (company == null)
+{
+    <p>ERROR</p>
+}
+else
+{
+
+    <h1>Welcome, @company[0].Title !</h1>
 
 
 
-<div class="container">
-    <div class="row">
-        <div class="col-sm">
-            @*<div class="x">
-                    <a>
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/SNice.svg/1200px-SNice.svg.png" width="70" height="70" style="display: block;
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                @*<div class="x">
+                        <a>
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/SNice.svg/1200px-SNice.svg.png" width="70" height="70" style="display: block;
+                        margin-left: auto;
+                        margin-right: auto;
+                        position:inherit;
+                        top:50px;" />
+                        </a>
+                        img.filter-image {
+                    display: block;
                     margin-left: auto;
                     margin-right: auto;
-                    position:inherit;
-                    top:50px;" />
-                    </a>
-                    img.filter-image {
-                display: block;
-                margin-left: auto;
-                margin-right: auto;
-                }
-                </div>*@
+                    }
+                    </div>*@
 
-            <div class="card" style="width: 18rem;">
-                <a>
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcR-2ISnlrqQh6scHBMkCgUro6mAnX5D850M4qHblF1zcX8FpsA1" width="70" height="70 " style="display: block;
+                <div class="card" style="width: 18rem;">
+                    <a>
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcR-2ISnlrqQh6scHBMkCgUro6mAnX5D850M4qHblF1zcX8FpsA1" width="170" height="170 " style="display: block;
                 margin-left: auto;
                 margin-right: auto;">
-                </a>
-                <div class="card-body">
-                    <h5 class="card-title" style="text-align:center">COMPANY X</h5>
-                    <p class="card-text">
-                        We are the best.
-                        Web Development 
+                    </a>
+                    <div class="card-body">
+                        <h5 class="card-title" style="text-align:center">COMPANY @company[0].Title</h5>
+                        <p class="card-text">
+                            We are the best.<br />
+                            Web Development<br />
 
-                    </p>
-                    <a href="#" class="btn btn-primary disabled">Go somewhere</a>
+                        </p>
+                        @*<a href="#" class="btn btn-primary disabled">Go somewhere</a>*@
+                    </div>
                 </div>
-            </div>
 
-        </div>
-        <div class="col-sm">
-            <h1 style="text-align:center">ABOUT US</h1>
-            We are the company X.<br />
-            We use technologies like X.<br />
-            We are the future.<br />
-            
-        </div>
-        <div class="col-sm">
-            <h5 style="text-align:center">Your Company's Open Positions</h5>
-            <ul class="list-group">
-                <li class="list-group-item">Position #1</li>
-                <li class="list-group-item">Position #2</li>
-                <li class="list-group-item">Position #3</li>
-                <li class="list-group-item">Position #4</li>
-                <li class="list-group-item">Position #5</li>
-                <li class="list-group-item">Position #6</li>
-                <li class="list-group-item">Position #7</li>
-            </ul>
+            </div>
+            <div class="col-sm">
+                <h1 style="text-align:center">ABOUT YOUR COMPANY</h1>
+                "We are the company @company[0].Title .<br />
+                We use technologies like HTML, CSS and BLAZOR.<br />
+                We are the future. "<br />
+
+            </div>
+            <div class="col-sm">
+                <h5 style="text-align:center">Your Company's Open Positions</h5>
+                <ul class="list-group">
+                    @*<li class="list-group-item">@company[0].CompanyPositions[0].Title</li>*@
+                    @*@if (company[0].CompanyPositions[1] == null)
+            {
+                <li class="list-group-item"> Position #2KİNG</li>
+            }
+            else
+            {
+                <li class="list-group-item"> @company[0].CompanyPositions[1].Title</li>
+            }*@
+
+
+
+
+                    @*<li class="list-group-item">@company[0].CompanyPositions[1].Title</li>*@
+                    @*<li class="list-group-item">Position #4</li>
+            <li class="list-group-item">Position #5</li>
+            <li class="list-group-item">Position #6</li>
+            <li class="list-group-item">Position #7</li>*@
+
+                    @for (int i = 0; i < company[0].CompanyPositions.Count; i++)
+                    {
+                        <li class="list-group-item">@company[0].CompanyPositions[i].Title</li>
+                    }
+                </ul>
+                @*<button onclick="location.href=" @page /Positions" type="button">
+                    www.example.com
+                </button>*@
+                <p>
+                    <br />
+                </p>
+                <a href="Positions" class="btn btn-primary">See all positions</a>
+            </div>
         </div>
     </div>
-</div>
+}
+
+@code
+{
+    private string error = "";
+    private Company[] company;
+    List<CompanyPosition> companyPosition;
+    List<CandidatePool> candidatePool;
+
+    protected override async Task OnInitializedAsync()
+    {
+        company = await Http.GetJsonAsync<Company[]>("api/company/1");
+        companyPosition = company[0].CompanyPositions;
+        candidatePool = company[0].CandidatePools;
+
+    }
+}

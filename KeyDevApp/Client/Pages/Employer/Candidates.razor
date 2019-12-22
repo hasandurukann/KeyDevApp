@@ -1,0 +1,147 @@
+﻿@page "/Candidates"
+
+@inject HttpClient Http
+@using KeyDevApp.Shared
+@using System.Net.Http
+
+
+@if (company == null)
+{
+    <p>ERROR</p>
+}
+else
+{
+    <h2>Candidates</h2>
+    <div class="row">
+        <div class="col-sm">
+            <div class="card" style="width: 18rem;">
+                <p>
+                    <br />
+                </p>
+                <a>
+                    <img src="https://scontent.fesb3-2.fna.fbcdn.net/v/t31.0-1/18209226_10154911160619342_708756558681506550_o.jpg?_nc_cat=101&_nc_oc=AQlV7W05RnrdNBKfR5fgZnsnGybMEY5dmXoRp_wZPw3Hdf1Mdm8piHQ2cncFo9O_bOI&_nc_ht=scontent.fesb3-2.fna&oh=79e948f20a96a8eb4f71a983549ac4fc&oe=5EAB99CB" width="170" height="170 " style="display: block;
+                margin-left: auto;
+                margin-right: auto;">
+                </a>
+                <div class="card-body">
+                    <h3 class="card-title" style="text-align:center">BATUHAN BALCI</h3>
+                    <p class="card-text">
+                        Front end developer.<br />
+                        <br />
+                        <h4 style="color:skyblue">Technologies</h4>
+                        Java, C#, JavaScript, Blazor<br />
+                        <br />
+                        <h4 style="color:skyblue">Education</h4>
+                        Ankara University<br />
+                        Computer Engineering<br />
+                        GPA: 4.00<br />
+                        <br />
+                        <h4 style="color:skyblue">Location</h4>
+                        Ankara<br />
+                        <br />
+                        <h4 style="color:skyblue">Contact Information</h4>
+                        +90 534 433 60 32<br />
+                        batuhanbalci@yandex.com<br />
+
+                    </p>
+                    @*<a href="#" class="btn btn-primary disabled">Go somewhere</a>*@
+                </div>
+            </div>
+        </div>
+        <div class="col-sm">
+            <div class="card" style="width: 18rem;">
+                <p>
+                    <br />
+                </p>
+                <a>
+                    <img src="https://scontent.fesb3-2.fna.fbcdn.net/v/t31.0-8/p960x960/10636663_10208601521944323_2438594512227646074_o.jpg?_nc_cat=101&_nc_oc=AQnEmabgR4vYz-d2RRpXG1AFqU2l44UCk2UapV0dem6e0roZEt5td9WExzl8zkeNHU0&_nc_ht=scontent.fesb3-2.fna&oh=3b0157588533d361d0618a4b0e0ab6b5&oe=5E7DAC42" width="170" height="170 " style="display: block;
+                margin-left: auto;
+                margin-right: auto;">
+                </a>
+                <div class="card-body">
+                    <h4 class="card-title" style="text-align:center">HASAN DURUKAN</h4>
+                    <p class="card-text">
+                        Back end developer.<br />
+                        <br />
+                        <h4 style="color:skyblue">Technologies</h4>
+                        R, C#, JavaScript, Angular<br />
+                        <br />
+                        <h4 style="color:skyblue">Education</h4>
+                        Ankara University<br />
+                        Computer Engineering<br />
+                        GPA: 4.00<br />
+                        <br />
+                        <h4 style="color:skyblue">Location</h4>
+                        Ankara<br />
+                        <br />
+                        <h4 style="color:skyblue">Contact Information</h4>
+                        +90 553 583 47 21<br />
+                        h.durukan.c@gmail.com<br />
+
+                    </p>
+                    @*<a href="#" class="btn btn-primary disabled">Go somewhere</a>*@
+                </div>
+            </div>
+        </div>
+        <div class="col-sm">
+            <div class="card" style="width: 18rem;">
+                <p>
+                    <br />
+                </p>
+                <a>
+                    <img src="https://scontent.fesb3-1.fna.fbcdn.net/v/t1.0-9/13620897_1777796379124722_682525208320955247_n.jpg?_nc_cat=111&_nc_oc=AQmGbcjKDhY54xABXBlzgcGw_S8HrdsRUmqYthvsvL6qr_aNmFJNTi1wzWx3eYUK8hU&_nc_ht=scontent.fesb3-1.fna&oh=82ef70549e7eaf4f749319302df355f0&oe=5E6D6252" width="170" height="170 " style="display: block;
+                margin-left: auto;
+                margin-right: auto;">
+                </a>
+                <div class="card-body">
+                    <h4 class="card-title" style="text-align:center">YUNUS EMRE ERİNÇ</h4>
+                    <p class="card-text">
+                        Front end developer.<br />
+                        <br />
+                        <h4 style="color:skyblue">Technologies</h4>
+                        Java, C#, C++, Python<br />
+                        <br />
+                        <h4 style="color:skyblue">Education</h4>
+                        Ankara University<br />
+                        Computer Engineering<br />
+                        GPA: 4.00<br />
+                        <br />
+                        <h4 style="color:skyblue">Location</h4>
+                        Ankara<br />
+                        <br />
+                        <h4 style="color:skyblue">Contact Information</h4>
+                        +90 535 033 78 60<br />
+                        yunusemrerinc@gmail.com<br />
+
+                    </p>
+                    @*<a href="#" class="btn btn-primary disabled">Go somewhere</a>*@
+                </div>
+            </div>
+        </div>
+    </div>
+    <p>
+        <br />
+    </p>
+    <button @onclick=addCandidate class="btn btn-primary" disabled>Add Candidates</button>
+}
+
+@code
+{
+    private string error = "";
+    private Company[] company;
+    List<CompanyPosition> companyPosition;
+    List<CandidatePool> candidatePool;
+
+    protected override async Task OnInitializedAsync()
+    {
+        company = await Http.GetJsonAsync<Company[]>("api/company/1");
+        companyPosition = company[0].CompanyPositions;
+        candidatePool = company[0].CandidatePools;
+
+    }
+
+    private async Task addCandidate()
+    {
+
+    }
+}
