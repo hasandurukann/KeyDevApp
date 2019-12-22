@@ -6,13 +6,24 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using KeyDevApp.Shared;
 using KeyDevApp.Server.DataEngine;
+using KeyDevApp.Server.Service;
+using Microsoft.AspNetCore.Authorization;
 
 namespace KeyDevApp.Server.Controllers
 {
+
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
     {
+        private IUserService _userService;
+
+        public UserController(IUserService userService)
+        {
+            _userService = userService;
+        }
+
         [HttpGet("{id}")]
         public IEnumerable<User> Get(int id)
         {
@@ -21,6 +32,21 @@ namespace KeyDevApp.Server.Controllers
             User user = new User();
             UserDE userDE = new UserDE();
             return userDE.GetUser(id);
+        }
+
+        [AllowAnonymous]
+        [HttpPost("authenticate")]
+        public IActionResult Authenticate([FromBody]AuthenticateModel model)
+        {
+            User umodel = new User();
+            umodel.Mail = model.Email;
+            umodel.Password = model.Password;
+            var user = _userService.Authenticate(umodel);
+
+            if (user == null)
+                return BadRequest(new { message = "Login failed, incorrect information." });
+
+            return Ok(user);
         }
 
         [HttpPut]

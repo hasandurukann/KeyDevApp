@@ -88,5 +88,23 @@ namespace KeyDevApp.Server.DataEngine
 
             }
         }
+
+        public User UserTryLogin(User u)
+        {
+            var paramu = new
+            {
+                Mail = u.Mail,
+                //Password = Helper.HashPassword(u.Password),
+                Password = u.Password
+            };
+            using (IDbConnection cnn = new SqlConnection(Helper.GetConnectionString()))
+            {
+                string sql = "dbo.SP_UserLogin";
+                User user = cnn.Query<User>(sql, paramu,
+                    commandType: CommandType.StoredProcedure).Single();
+                return user;
+
+            }
+        }
     }
 }

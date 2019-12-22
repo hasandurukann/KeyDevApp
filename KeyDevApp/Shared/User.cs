@@ -27,5 +27,6 @@ namespace KeyDevApp.Shared
         }
         public bool Type { get => type; set => type = value; }
         public int UserID { get => userID; set => userID = value; }
+        public string Token { get; set; }
     }
 }
