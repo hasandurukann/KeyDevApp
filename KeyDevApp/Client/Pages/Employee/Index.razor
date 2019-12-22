@@ -1,4 +1,4 @@
-﻿@page "/bbb"
+﻿@page "/"
 
 @using KeyDevApp.Shared
 @using System.Net.Http
@@ -98,14 +98,27 @@ else
 
 @code
 {
-    private User[] user;
+    private User user;
+    private User[] users;
     private Candidate[] candidates;
     private CandidateKeyword[] candidateKeywords;
+    private AuthenticateModel authenticate;
 
     protected override async Task OnInitializedAsync()
     {
-        user = await Http.GetJsonAsync<User[]>("api/user/1");
-        candidates = await Http.GetJsonAsync<Candidate[]>($"api/candidate/{user[0].Candidate.CandidateID}");
+
+        authenticate = new AuthenticateModel();
+        authenticate.Email = "Bolt@nowhere.com";
+        authenticate.Password = "RMJelfmTrQMhVGTTUaUW5A==";
+        user = await Http.PostJsonAsync<User>("api/user/authenticate",authenticate);
+
+        Http.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", user.Token);
+
+        users = await Http.GetJsonAsync<User[]>("api/user/1");
+
+        candidates = await Http.GetJsonAsync<Candidate[]>($"api/candidate/{users[0].Candidate.CandidateID}");
         candidateKeywords = await Http.GetJsonAsync<CandidateKeyword[]>($"api/candidateKeyword/0/{candidates[0].CandidateID}");
+
+
     }
 }

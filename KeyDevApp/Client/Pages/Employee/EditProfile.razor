@@ -88,18 +88,22 @@ else
     <div class="row">
         <div class="col-sm-12">
             <h5>Education</h5>
-            @foreach (var item in educations)
+            @if (educations != null)
             {
-                <div class="edu-history">
-                    <i><span class="oi oi-clipboard"></span></i>
-                    <div class="edu-history-info">
-                        <h3>High School</h3>
-                        <i>@item.GraduationYear</i>-<i>@item.GPA</i>
-                        <span>Middle East Technical University <i>Computer Science</i></span>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin a ipsum tellus. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
+                @foreach (var item in educations)
+                {
+                    <div class="edu-history">
+                        <i><span class="oi oi-clipboard"></span></i>
+                        <div class="edu-history-info">
+                            <h3>High School</h3>
+                            <i>@item.GraduationYear</i>-<i>@item.GPA</i>
+                            <span>Middle East Technical University <i>Computer Science</i></span>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin a ipsum tellus. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
+                        </div>
                     </div>
-                </div>
+                }
             }
+            
             <div class="edu-history">
                 <i><span class="oi oi-clipboard"></span></i>
                 <div class="edu-history-info">
@@ -203,18 +207,20 @@ else
 
     private string err = "";
     private User[] user;
+    private Candidate[] candidates;
     private Candidate candidate;
     private List<Education> educations;
     Department[] department;
 
     protected override async Task OnInitializedAsync()
     {
-        user = await Http.GetJsonAsync<User[]>("api/user/1");
+        user = await Http.GetJsonAsync<User[]>("api/user/1");       
+        candidates = await Http.GetJsonAsync<Candidate[]>($"api/candidate/{user[0].Candidate.CandidateID}");
+        candidate = candidates[0];
         mail = user[0].Mail;
         password = user[0].Password;
-        candidate = user[0].Candidate;
         educations = candidate.Educations;
-        //candidate = await Http.GetJsonAsync<Candidate[]>($"api/candidate/{user[0].Candidate.CandidateID}");
+
         department = await Http.GetJsonAsync<Department[]>("api/department/3");
     }
 

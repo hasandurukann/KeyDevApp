@@ -14,5 +14,8 @@
   <ItemGroup>
     <ProjectReference Include="..\Shared\KeyDevApp.Shared.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Services\" />
+  </ItemGroup>
 
 </Project>

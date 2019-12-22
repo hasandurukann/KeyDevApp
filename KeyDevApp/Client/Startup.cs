@@ -1,3 +1,4 @@
+
 using Microsoft.AspNetCore.Components.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -7,6 +8,7 @@ namespace KeyDevApp.Client
     {
         public void ConfigureServices(IServiceCollection services)
         {
+
         }
 
         public void Configure(IComponentsApplicationBuilder app)
